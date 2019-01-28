@@ -93,6 +93,10 @@ const dispatched_course3 = store.dispatch(
 );
 console.log(dispatched_course3);
 
+console.log({
+  ...user
+});
+
 const demoState = {
   courses: [
     {
