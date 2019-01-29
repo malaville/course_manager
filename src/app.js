@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import AppRouter from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
 import {
@@ -135,14 +136,10 @@ const lessons = getVisibleLessons(
   store.getState().courses,
   store.getState().userInterface
 );
-ReactDOM.render(
-  <div>
+
+const jsx = (
+  <Provider store={store}>
     <AppRouter />
-    {lessons.map(lesson => (
-      <p key={lesson.course_short_name + "_" + lesson.lesson_number}>
-        {JSON.stringify(lesson)}
-      </p>
-    ))}
-  </div>,
-  document.getElementById("app")
+  </Provider>
 );
+ReactDOM.render(jsx, document.getElementById("app"));

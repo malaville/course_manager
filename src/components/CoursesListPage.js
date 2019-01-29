@@ -1,5 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
+import CourseList from "./CourseList";
 
 const coursesList = [["1", "The First Course"], ["2", "The Second Course"]];
 
@@ -34,12 +35,7 @@ const CoursesListPage = props => {
     <div>
       This is from my edit expense component.
       <br />
-      {props.match.params.name_of_the_course &&
-        `You queried the course n°${
-          props.match.params.id
-        } and name ${props.match.params.name_of_the_course
-          .toUpperCase()
-          .replace(/_/g, " ")}`}
+      <CourseList />
     </div>
   );
 };
