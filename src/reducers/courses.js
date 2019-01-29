@@ -4,11 +4,29 @@ export default (state = coursesReducerDefaultState, action) => {
     case "ADD_COURSE":
       return [...state, action.course];
     case "ADD_LESSON":
+      let position_in_courses = -1;
+      for (let i = 0; i < state.length; i++) {
+        if (state[i].id === action.lesson.course_id) {
+          position_in_courses = i;
+          break;
+        }
+      }
+      if (position_in_courses == -1) {
+        return state;
+      }
+      const course_lessons_number =
+        action.lesson.lesson_number <= state[position_in_courses].lessons.length
+          ? state[position_in_courses].lessons.length + 1
+          : action.lesson.lesson_number;
+
       return state.map((course, index) => {
-        if (index == action.position_in_courses) {
+        if (index == position_in_courses) {
           return {
             ...course,
-            lessons: [...course.lessons, action.lesson]
+            lessons: [
+              ...course.lessons,
+              { ...action.lesson, lesson_number: course_lessons_number }
+            ]
           };
         } else {
           return course;
@@ -16,7 +34,7 @@ export default (state = coursesReducerDefaultState, action) => {
       });
     case "REMOVE_LESSON":
       return state.map((course, index) => {
-        if (index != action.position_in_courses) {
+        if (course.id != action.id) {
           return course;
         } else {
           return {

@@ -31,17 +31,22 @@ export default (courses, { endDate, startDate, courseIdFilters }) => {
     const isInFilteredCourses =
       courseIdFilters.length == 0 || courseIdFilters.includes(course.id);
     filteredLessons = filteredLessons.concat(
-      course.lessons.filter(lesson => {
-        const laterThanStartDate =
-          !startDate || new Date(lesson.date) >= startDate;
-        const earlierThanEndDate = !endDate || new Date(lesson.date) <= endDate;
-        console.log(
-          isInFilteredCourses,
-          laterThanStartDate,
-          earlierThanEndDate
-        );
-        return isInFilteredCourses && laterThanStartDate && earlierThanEndDate;
-      })
+      course.lessons
+        .filter(lesson => {
+          const laterThanStartDate =
+            !startDate || new Date(lesson.date) >= startDate;
+          const earlierThanEndDate =
+            !endDate || new Date(lesson.date) <= endDate;
+          console.log(
+            isInFilteredCourses,
+            laterThanStartDate,
+            earlierThanEndDate
+          );
+          return (
+            isInFilteredCourses && laterThanStartDate && earlierThanEndDate
+          );
+        })
+        .map(lesson => ({ ...lesson, course_short_name: course.short_name }))
     );
   });
   return filteredLessons.sort(compareBy("date"));
