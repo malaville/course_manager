@@ -1,14 +1,40 @@
 import React from "react";
-
-const Course = props => {
+import Lesson from "./Lesson";
+import { Link } from "react-router-dom";
+const Course = ({
+  short_name,
+  title,
+  id,
+  main_teacher,
+  description,
+  lessons,
+  showLessons
+}) => {
   return (
-    <li key={props.short_name}>
-      <h3>{props.short_name + " - " + props.title}</h3>
+    <li key={short_name}>
+      <h3>
+        {short_name + " - " + title}{" "}
+        <Link to={`/courses/${id}/${title.toLowerCase().replace(/\s+/g, "_")}`}>
+          {" "}
+          détails
+        </Link>
+      </h3>
       <p>
-        Main Teacher : {props.main_teacher}
+        Main Teacher : {main_teacher}
         <br />
-        Description : {props.description}
+        Description : {description}
+        <br />
       </p>
+      {showLessons && (
+        <ul>
+          {lessons.map(lesson => (
+            <Lesson
+              key={lesson.course_id + "_" + lesson.lesson_number}
+              {...lesson}
+            />
+          ))}
+        </ul>
+      )}
     </li>
   );
 };

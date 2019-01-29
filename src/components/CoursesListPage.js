@@ -1,11 +1,10 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import CourseList from "./CourseList";
-
-const coursesList = [["1", "The First Course"], ["2", "The Second Course"]];
+import { connect } from "react-redux";
 
 const CoursesListPage = props => {
-  console.log(props);
+  const coursesList = props.coursesList;
 
   let courseIsInList = !props.match.params.id || false;
   let names_are_not_matching = false;
@@ -30,14 +29,18 @@ const CoursesListPage = props => {
   if (names_are_not_matching) {
     return <Redirect to={`/courses/${props.match.params.id}/${url_name}`} />;
   }
-
+  const focusId =
+    !!props.match.params.name_of_the_course && props.match.params.id;
   return (
     <div>
       This is from my edit expense component.
       <br />
-      <CourseList />
+      <CourseList focusId={focusId} />
     </div>
   );
 };
+const mapStateToProps = state => ({
+  coursesList: state.courses.map(course => [course.id, course.title])
+});
 
-export default CoursesListPage;
+export default connect(mapStateToProps)(CoursesListPage);

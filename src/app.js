@@ -23,15 +23,33 @@ store.subscribe(() => {
 });
 
 const mock_course = {
-  id: "poijadfdf2dzqzd",
+  id: 1,
   title: "One Course3",
   short_name: "1C3",
   main_teacher: "J-M. Dalle",
-  description: "This course is the third of the innovation seminary"
+  description: "This course is the third of the innovation seminary",
+  lessons: [
+    {
+      location: "Agoranov",
+      hour: "16:30",
+      date: "2019-01-18",
+      course_id: "poijadfdf2dzqzd",
+      lesson_number: 1,
+      description: "JMD will be talking about Agoranov for one long hour"
+    },
+    {
+      location: "Telecom",
+      hour: "16:30",
+      date: "2019-01-26",
+      course_id: 1,
+      lesson_number: 2,
+      description: "JB Bengo will be talking about very interesting things"
+    }
+  ]
 };
 
 const mock_course2 = {
-  id: "poijadfdf",
+  id: 2,
   title: "One Course2",
   short_name: "1C2",
   main_teacher: "J-M. Dalle",
@@ -42,7 +60,7 @@ const mock_course2 = {
       location: "Agoranov",
       hour: "16:30",
       date: "2019-01-18",
-      course_id: "poijadfdf",
+      course_id: 2,
       lesson_number: 1,
       description: "JMD will be talking about Agoranov for one long hour"
     },
@@ -50,9 +68,25 @@ const mock_course2 = {
       location: "Telecom",
       hour: "16:30",
       date: "2019-01-26",
-      course_id: "poijadfdf",
+      course_id: 2,
       lesson_number: 2,
       description: "JB Bengo will be talking about very interesting things"
+    },
+    {
+      location: "Telecom",
+      hour: "16:30",
+      date: "2019-01-31",
+      course_id: 1,
+      lesson_number: -1,
+      description: "Un intervenant de qualité"
+    },
+    {
+      location: "Telecom",
+      hour: "16:30",
+      date: "2019-02-12",
+      course_id: 1,
+      lesson_number: -1,
+      description: "Un intervenant de qualité"
     }
   ]
 };
@@ -62,80 +96,26 @@ store.dispatch(addLesson(mock_course2.id, mock_course2.lessons[1]));
 
 store.dispatch(addCourse(mock_course));
 
-store.dispatch(
-  addLesson(
-    "poijadfdf2dzqzd",
-    {
-      location: "Agoranov",
-      hour: "16:30",
-      date: "2019-01-18",
-      course_id: "poijadfdf2dzqzd",
-      lesson_number: 1,
-      description: "JMD will be talking about Agoranov for one long hour"
-    },
-    store
-  )
-);
+store.dispatch(addLesson(1, mock_course.lessons[0]));
 
 store.dispatch(
-  editCourse("poijadfdf2dzqzd", {
-    title: "First Course 3"
+  editCourse(1, {
+    title: "First Course"
   })
 );
 
+store.dispatch(addLesson(1, mock_course.lessons[1]));
+store.dispatch(addLesson(1, mock_course.lessons[2]));
 store.dispatch(
-  addLesson(
-    "poijadfdf2dzqzd",
-    {
-      location: "Telecom",
-      hour: "16:30",
-      date: "2019-01-26",
-      course_id: "poijadfdf2dzqzd",
-      lesson_number: 2,
-      description: "JB Bengo will be talking about very interesting things"
-    },
-    store
-  )
-);
-
-store.dispatch(
-  addLesson(
-    "poijadfdf2dzqzd",
-    {
-      location: "Telecom",
-      hour: "16:30",
-      date: "2019-01-31",
-      course_id: "poijadfdf2dzqzd",
-      lesson_number: -1,
-      description: "Un intervenant de qualité"
-    },
-    store
-  )
-);
-
-store.dispatch(
-  editLesson("poijadfdf2dzqzd", 3, {
+  editLesson(1, 3, {
     description:
       "Un intervenant de qualité du nom de Piacentino, vous le connaissez"
   })
 );
+store.dispatch(addLesson(1, mock_course.lessons[3]));
 
-store.dispatch(
-  addLesson("poijadfdf2dzqzd", {
-    location: "Telecom",
-    hour: "16:30",
-    date: "2019-02-12",
-    course_id: "poijadfdf2dzqzd",
-    lesson_number: -1,
-    description: "Un intervenant de qualité"
-  })
-);
 store.dispatch(setEndDate("2019-02-02"));
 store.dispatch(setStartDate("2019-01-19"));
-const lessons = getVisibleLessons(
-  store.getState().courses,
-  store.getState().userInterface
-);
 
 const jsx = (
   <Provider store={store}>
