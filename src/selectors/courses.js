@@ -25,7 +25,11 @@ const compareBy = field => {
   }
 };
 
-export default (courses, { endDate, startDate, courseIdFilters }) => {
+export default (
+  courses,
+  { endDate, startDate, courseIdFilters, sortLessonsBy }
+) => {
+  courseIdFilters = courseIdFilters.map(x => parseInt(x));
   let filteredLessons = [];
   courses.forEach(course => {
     const isInFilteredCourses =
@@ -37,11 +41,6 @@ export default (courses, { endDate, startDate, courseIdFilters }) => {
             !startDate || new Date(lesson.date) >= startDate;
           const earlierThanEndDate =
             !endDate || new Date(lesson.date) <= endDate;
-          console.log(
-            isInFilteredCourses,
-            laterThanStartDate,
-            earlierThanEndDate
-          );
           return (
             isInFilteredCourses && laterThanStartDate && earlierThanEndDate
           );
@@ -49,5 +48,5 @@ export default (courses, { endDate, startDate, courseIdFilters }) => {
         .map(lesson => ({ ...lesson, course_short_name: course.short_name }))
     );
   });
-  return filteredLessons.sort(compareBy("date"));
+  return filteredLessons.sort(compareBy(sortLessonsBy));
 };

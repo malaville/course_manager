@@ -31,6 +31,7 @@ const Course = ({
             <Lesson
               key={lesson.course_id + "_" + lesson.lesson_number}
               {...lesson}
+              course_short_name={short_name}
             />
           ))}
         </ul>

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Link, NavLink } from "react-router-dom";
 import CourseDashBoardPage from "../components/CourseDashBoardPage";
-import AddExpensePage from "../components/AddCoursePage";
+import AddCoursePage from "../components/AddCoursePage";
 import CoursesListPage from "../components/CoursesListPage";
 import HelpPage from "../components/HelpPage";
 import NotFoundPage from "../components/NotFoundPage";
@@ -14,7 +14,7 @@ const AppRouter = () => (
       <Switch>
         {/* Don't forget that switch only get the first route that matches. when BrowserRouter stacks every */}
         <Route path="/" component={CourseDashBoardPage} exact={true} />
-        <Route path="/create" component={AddExpensePage} />
+        <Route path="/create" component={AddCoursePage} />
         <Route exact path="/courses/" component={CoursesListPage} />
         <Route exact path="/courses/:id/" component={CoursesListPage} />
         <Route

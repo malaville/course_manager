@@ -33,8 +33,6 @@ const CoursesListPage = props => {
     !!props.match.params.name_of_the_course && props.match.params.id;
   return (
     <div>
-      This is from my edit expense component.
-      <br />
       <CourseList focusId={focusId} />
     </div>
   );

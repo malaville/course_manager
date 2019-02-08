@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import Course from "./Course";
 
 const CourseList = props => {
-  console.log("props.focusId", props.focusId);
   return (
     <ul>
       {props.focusId ? (
