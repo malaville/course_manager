@@ -58,14 +58,18 @@ export default (state = coursesReducerDefaultState, action) => {
     case "EDIT_LESSON":
       return state.map(course => {
         if (course.id != action.id) {
+          // Si le cours ne correspond pas à celui traité, on le retourne tel quel
           return course;
         } else {
           return {
+            // Sinon on prend tous les éléments de course, mais on modifie les lessons.
             ...course,
             lessons: course.lessons.map(lesson => {
               if (lesson.lesson_number != action.lesson_number) {
+                // Encore une fois, la leçon dont c'est pas le bon numéro n'est pas modifiée
                 return lesson;
               } else {
+                // La voilà
                 return { ...lesson, ...action.modifications };
               }
             })
