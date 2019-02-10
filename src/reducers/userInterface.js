@@ -1,6 +1,8 @@
+import moment from "moment";
+
 const userInterfaceDefaultState = {
-  startDate: undefined,
-  endDate: undefined,
+  startDate: moment().startOf("year"),
+  endDate: moment().endOf("month"),
   user: {
     firstName: "NOT LOGGED",
     lastName: "IN"

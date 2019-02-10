@@ -114,9 +114,6 @@ store.dispatch(
 );
 store.dispatch(addLesson(2, mock_course2.lessons[3]));
 
-store.dispatch(setEndDate("2019-02-02"));
-store.dispatch(setStartDate("2019-01-17"));
-
 const jsx = (
   <Provider store={store}>
     <AppRouter />
