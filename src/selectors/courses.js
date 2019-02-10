@@ -1,9 +1,10 @@
 //Show visible courses :
+import moment from "moment";
 const compareBy = field => {
   function compareByDate(a, b) {
-    const da = new Date(a.date + " " + a.hour);
-    const db = new Date(b.date + " " + b.hour);
-    return da > db ? 1 : da < db ? -1 : 0;
+    const da = moment(a.date + " " + a.hour);
+    const db = moment(b.date + " " + b.hour);
+    return da.isAfter(db) ? 1 : da.isBefore(db) ? -1 : 0;
   }
   if (field === "date") {
     return compareByDate;
@@ -38,9 +39,9 @@ export default (
       course.lessons
         .filter(lesson => {
           const laterThanStartDate =
-            !startDate || new Date(lesson.date) >= startDate;
+            !startDate || moment(lesson.date).isSameOrAfter(startDate);
           const earlierThanEndDate =
-            !endDate || new Date(lesson.date) <= endDate;
+            !endDate || moment(lesson.date).isSameOrBefore(endDate);
           return (
             isInFilteredCourses && laterThanStartDate && earlierThanEndDate
           );
