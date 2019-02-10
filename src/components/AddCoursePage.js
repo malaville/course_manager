@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { addCourse } from "../actions/courses";
 
-export default class AddCoursePage extends React.Component {
+class AddCoursePage extends React.Component {
   state = {
     title: "",
     short_name: "",
@@ -16,32 +18,44 @@ export default class AddCoursePage extends React.Component {
     }));
   };
 
+  onSubmit = e => {
+    e.preventDefault();
+    console.log(this.state);
+    const allFieldsAreFilled =
+      this.state.title &&
+      this.state.short_name &&
+      this.state.main_teacher &&
+      this.state.description;
+    if (allFieldsAreFilled) {
+      this.props.dispatch(addCourse({ ...this.state }));
+    }
+  };
+
   render() {
     return (
       <div>
-        This is from my add expense component
-        <form>
-          Title and short name : <br />
+        <form onSubmit={e => this.onSubmit(e)}>
+          Titre et Acronyme: <br />
           <input
             type="text"
-            placeholder="Title of the course"
+            placeholder="Titre du cours"
             name="title"
             value={this.state.title}
             onChange={e => this.onInputChange(e)}
           />
           <input
             type="text"
-            placeholder="Short name (i.e. CR3)"
+            placeholder="Acronyme (i.e. CR3)"
             name="short_name"
             value={this.state.short_name}
             onChange={e => this.onInputChange(e)}
           />
           <br />
-          Professor in charge :
+          professeur en charge :
           <br />
           <input
             type="text"
-            placeholder="Professor in charge"
+            placeholder="Professeur en charge"
             name="main_teacher"
             value={this.state.main_teacher}
             onChange={e => this.onInputChange(e)}
@@ -57,12 +71,14 @@ export default class AddCoursePage extends React.Component {
             onChange={e => this.onInputChange(e)}
           />
           <br />
-          <button type="submit">Submit</button>
+          <button type="submit">Enregister</button>
         </form>
       </div>
     );
   }
 }
+
+export default connect()(AddCoursePage);
 
 // const mock_course2 = {
 //   id: 2,

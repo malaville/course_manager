@@ -14,7 +14,12 @@ const CourseList = props => {
         />
       ) : (
         props.courses.map(course => (
-          <Course key={course.id} showLessons={false} {...course} />
+          <Course
+            key={course.id}
+            showLessons={false}
+            {...course}
+            showLessons={course.id == props.focusId}
+          />
         ))
       )}
     </ul>

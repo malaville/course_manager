@@ -17,7 +17,9 @@ export class Lesson extends React.Component {
   };
 
   toggleEditMode = () => {
-    this.setState(prevState => ({ editMode: !prevState.editMode }));
+    this.setState(prevState => ({
+      editMode: this.props.editable && !prevState.editMode
+    }));
   };
 
   onSubmit = e => {
@@ -41,34 +43,41 @@ export class Lesson extends React.Component {
   render() {
     return (
       <li key={this.props.course_id}>
-        <h4>
-          {this.props.course_short_name +
-            " - Séance°" +
-            this.props.lesson_number +
-            " - " +
-            this.props.date +
-            " " +
-            this.props.hour}
-          <button
-            className="btn btn-primary"
-            onClick={() => {
-              this.toggleEditMode();
-            }}
-          >
-            Éditer
-          </button>
-          <button
-            className="btn btn-danger"
-            onClick={() => (
-              this.props.course_id,
-              this.props.dispatch(
-                removeLesson(this.props.course_id, this.props.lesson_number)
-              )
-            )}
-          >
-            Supprimer
-          </button>
-        </h4>
+        <div className="row">
+          <h4 className="lesson__title col col-sm-9 col-12">
+            {this.props.course_short_name +
+              " - Séance°" +
+              this.props.lesson_number +
+              " - " +
+              this.props.date +
+              " " +
+              this.props.hour}
+          </h4>
+          <div className="col col-sm-3 col-12">
+            <button
+              className="btn btn-primary"
+              {...(this.props.editable
+                ? { disabled: false }
+                : { disabled: true })}
+              onClick={() => {
+                this.toggleEditMode();
+              }}
+            >
+              Éditer
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => (
+                this.props.course_id,
+                this.props.dispatch(
+                  removeLesson(this.props.course_id, this.props.lesson_number)
+                )
+              )}
+            >
+              Supprimer
+            </button>
+          </div>
+        </div>
         <p>
           Location : {this.props.location}
           <br />

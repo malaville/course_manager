@@ -2,7 +2,14 @@ const coursesReducerDefaultState = [];
 export default (state = coursesReducerDefaultState, action) => {
   switch (action.type) {
     case "ADD_COURSE":
-      return [...state, action.course];
+      if (action.course.id) {
+        return [...state, action.course];
+      } else {
+        const maxidofcourses = state.map(course => course.id).sort()[
+          state.length - 1
+        ];
+        return [...state, { ...action.course, id: maxidofcourses + 1 }];
+      }
     case "ADD_LESSON":
       let position_in_courses = -1;
       for (let i = 0; i < state.length; i++) {
@@ -33,7 +40,7 @@ export default (state = coursesReducerDefaultState, action) => {
         }
       });
     case "REMOVE_LESSON":
-      return state.map((course, index) => {
+      return state.map(course => {
         if (course.id != action.id) {
           return course;
         } else {

@@ -1,6 +1,6 @@
 //ADD_COURSE
 export const addCourse = ({
-  id = new Date().getTime(),
+  id = undefined,
   title = "",
   short_name = "",
   main_teacher = "",
