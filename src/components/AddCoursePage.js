@@ -28,6 +28,7 @@ class AddCoursePage extends React.Component {
       this.state.description;
     if (allFieldsAreFilled) {
       this.props.dispatch(addCourse({ ...this.state }));
+      this.props.history.push("/courses/" + (this.props.coursesNumber + 1));
     }
   };
 
@@ -78,7 +79,9 @@ class AddCoursePage extends React.Component {
   }
 }
 
-export default connect()(AddCoursePage);
+export default connect(state => ({
+  coursesNumber: state.courses.length
+}))(AddCoursePage);
 
 // const mock_course2 = {
 //   id: 2,
