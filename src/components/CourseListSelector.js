@@ -1,6 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setCourseIdFilters, sortLessonsBy } from "../actions/userInterface";
+import {
+  setCourseIdFilters,
+  sortLessonsBy,
+  setEndDate,
+  setStartDate
+} from "../actions/userInterface";
+import { DateRangePicker } from "react-dates";
+import "react-dates/lib/css/_datepicker.css";
 
 const CourseItemCheckbox = ({ short_name, id, dispatch }) => (
   <label>
@@ -30,32 +37,63 @@ const SortingSelector = ({ filters, dispatch, selected_id }) => (
   </select>
 );
 
-const CourseListSelector = props => {
-  const SelectorParams = {
+class CourseListSelector extends React.Component {
+  state = {
+    calendarFocused: null
+    // startDate: this.props.startDate,
+    // endDate: this.props.endDate
+  };
+
+  SelectorParams = {
     filters: [
       { name: "date", id: "date" },
       { name: "course", id: "main_course_date" }
     ],
     selected_id: "main_course_date" //props.lessonFilter
   };
-  return (
-    <form>
-      {props.courses.map(course => (
-        <CourseItemCheckbox
-          key={course.id}
-          dispatch={props.dispatch}
-          {...course}
-        />
-      ))}
-      <SortingSelector dispatch={props.dispatch} {...SelectorParams} />
-    </form>
-  );
-};
 
+  onDatesChange = ({ startDate, endDate }) => {
+    this.props.dispatch(setStartDate(startDate));
+    this.props.dispatch(setEndDate(endDate));
+  };
+
+  onFocusChange = calendarFocused => {
+    this.setState(() => ({ calendarFocused }));
+  };
+  render() {
+    return (
+      <form>
+        {this.props.courses.map(course => (
+          <CourseItemCheckbox
+            key={course.id}
+            dispatch={this.props.dispatch}
+            {...course}
+          />
+        ))}
+        <SortingSelector
+          dispatch={this.props.dispatch}
+          {...this.SelectorParams}
+        />
+        <DateRangePicker
+          startDate={this.props.startDate}
+          endDate={this.props.endDate}
+          onDatesChange={this.onDatesChange}
+          focusedInput={this.state.calendarFocused}
+          onFocusChange={this.onFocusChange}
+          numberOfMonths={2}
+          isOutsideRange={() => false}
+          showClearDates={true}
+        />
+      </form>
+    );
+  }
+}
 const mapStateToProps = state => {
   return {
     courses: state.courses,
-    lessonFilter: state.userInterface.sortLessonsBy
+    lessonFilter: state.userInterface.sortLessonsBy,
+    startDate: state.userInterface.startDate,
+    endDate: state.userInterface.endDate
   };
 };
 
