@@ -11,7 +11,7 @@ import {
 } from "./actions/courses";
 import getVisibleLessons from "./selectors/courses";
 import { setEndDate, setStartDate } from "./actions/userInterface";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/bootstrap.min.css";
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 
