@@ -5,7 +5,9 @@
   "author": "Andrew Mead",
   "license": "MIT",
   "engines": {
-    "node": "10.3.0"
+    "npm": "3.5.2",
+    "node": "8.10.0",
+    "yarn": "1.12.3"
   },
   "scripts": {
     "serve": "live-server public/",
