@@ -13,8 +13,7 @@ export const addCourse = ({
     short_name,
     main_teacher,
     description,
-    last_modified: new Date().getTime(),
-    lessons: []
+    last_modified: new Date().getTime()
   }
 });
 
@@ -49,25 +48,25 @@ export const removeCourse = ({ id }) => ({ type: "REMOVE_COURSE", id });
 
 //REMOVE_LESSON
 
-export const removeLesson = (id, lesson_number) => {
+export const removeLesson = ({ course_id, lesson_number }) => {
   return {
     type: "REMOVE_LESSON",
-    id,
+    course_id,
     lesson_number
   };
 };
 //EDIT COURSE
 
-export const editCourse = (id, modifications) => ({
+export const editCourse = ({ course_id, modifications }) => ({
   type: "EDIT_COURSE",
-  id,
+  course_id,
   modifications
 });
 //EDIT LESSON
 
-export const editLesson = (id, lesson_number, modifications) => ({
+export const editLesson = ({ course_id, lesson_number, modifications }) => ({
   type: "EDIT_LESSON",
-  id,
+  course_id,
   lesson_number,
   modifications
 });

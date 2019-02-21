@@ -30,11 +30,15 @@ export class Lesson extends React.Component {
     const hourIsNotEmpty = !!this.state.date;
     if (descriptionIsNotEmpty && dateIsNotEmpty && hourIsNotEmpty) {
       this.props.dispatch(
-        editLesson(this.props.course_id, this.props.lesson_number, {
-          date: this.state.date,
-          hour: this.state.hour,
-          description: this.state.description,
-          location: this.state.location
+        editLesson({
+          course_id: this.props.course_id,
+          lesson_number: this.props.lesson_number,
+          modifications: {
+            date: this.state.date,
+            hour: this.state.hour,
+            description: this.state.description,
+            location: this.state.location
+          }
         })
       );
       this.toggleEditMode();
@@ -69,9 +73,7 @@ export class Lesson extends React.Component {
               className="btn btn-danger"
               onClick={() => (
                 this.props.course_id,
-                this.props.dispatch(
-                  removeLesson(this.props.course_id, this.props.lesson_number)
-                )
+                this.props.dispatch(removeLesson({ ...this.props }))
               )}
             >
               Supprimer

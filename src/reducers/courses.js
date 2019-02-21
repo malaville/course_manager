@@ -3,12 +3,15 @@ export default (state = coursesReducerDefaultState, action) => {
   switch (action.type) {
     case "ADD_COURSE":
       if (action.course.id) {
-        return [...state, action.course];
+        return [...state, { ...action.course, lessons: [] }];
       } else {
         const maxidofcourses = state.map(course => course.id).sort()[
           state.length - 1
         ];
-        return [...state, { ...action.course, id: maxidofcourses + 1 }];
+        return [
+          ...state,
+          { ...action.course, id: maxidofcourses + 1, lessons: [] }
+        ];
       }
     case "ADD_LESSON":
       let position_in_courses = -1;
@@ -41,7 +44,7 @@ export default (state = coursesReducerDefaultState, action) => {
       });
     case "REMOVE_LESSON":
       return state.map(course => {
-        if (course.id != action.id) {
+        if (course.id != action.course_id) {
           return course;
         } else {
           return {
@@ -56,7 +59,7 @@ export default (state = coursesReducerDefaultState, action) => {
       return state.filter(({ id }) => id !== action.id);
     case "EDIT_COURSE":
       return state.map(course => {
-        if (course.id != action.id) {
+        if (course.id != action.course_id) {
           return course;
         } else {
           return { ...course, ...action.modifications };
@@ -64,7 +67,7 @@ export default (state = coursesReducerDefaultState, action) => {
       });
     case "EDIT_LESSON":
       return state.map(course => {
-        if (course.id != action.id) {
+        if (course.id != action.course_id) {
           // Si le cours ne correspond pas à celui traité, on le retourne tel quel
           return course;
         } else {

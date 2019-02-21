@@ -99,17 +99,24 @@ store.dispatch(addCourse(mock_course2));
 store.dispatch(addLesson(2, mock_course2.lessons[0]));
 
 store.dispatch(
-  editCourse(2, {
-    title: "First Course"
+  editCourse({
+    course_id: 2,
+    modifications: {
+      title: "First Course"
+    }
   })
 );
 
 store.dispatch(addLesson(2, mock_course2.lessons[1]));
 store.dispatch(addLesson(2, mock_course2.lessons[2]));
 store.dispatch(
-  editLesson(2, 3, {
-    description:
-      "Un intervenant de qualité du nom de Piacentino, vous le connaissez"
+  editLesson({
+    course_id: 2,
+    lesson_number: 3,
+    modifications: {
+      description:
+        "Un intervenant de qualité du nom de Piacentino, vous le connaissez"
+    }
   })
 );
 store.dispatch(addLesson(2, mock_course2.lessons[3]));
