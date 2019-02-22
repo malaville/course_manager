@@ -1,35 +1,37 @@
-import moment from "moment";
+import moment from 'moment';
 
 const userInterfaceDefaultState = {
-  startDate: moment().startOf("year"),
-  endDate: moment().endOf("month"),
+  startDate: moment()
+    .startOf('year')
+    .subtract(4, 'month'),
+  endDate: moment()
+    .startOf('year')
+    .add(6, 'month'),
   user: {
-    firstName: "NOT LOGGED",
-    lastName: "IN"
+    firstName: 'NOT LOGGED',
+    lastName: 'IN'
   },
-  sortLessonsBy: "main_course_date",
+  sortLessonsBy: 'main_course_date',
   courseIdFilters: [],
   errors: []
 };
 export default (state = userInterfaceDefaultState, action) => {
   switch (action.type) {
-    case "ADD_ERROR":
+    case 'ADD_ERROR':
       return { ...state, errors: [...state.errors, action.error] };
-    case "SET_START_DATE":
+    case 'SET_START_DATE':
       return { ...state, startDate: action.date };
-    case "SET_END_DATE":
+    case 'SET_END_DATE':
       return { ...state, endDate: action.date };
-    case "SET_COURSE_ID_FILTERS":
+    case 'SET_COURSE_ID_FILTERS':
       let newCourseIdFilters;
       if (action.checked) {
         newCourseIdFilters = [...state.courseIdFilters, action.id];
       } else {
-        newCourseIdFilters = state.courseIdFilters.filter(
-          id => id != action.id
-        );
+        newCourseIdFilters = state.courseIdFilters.filter(id => id != action.id);
       }
       return { ...state, courseIdFilters: newCourseIdFilters.sort() };
-    case "SORT_LESSONS_BY":
+    case 'SORT_LESSONS_BY':
       return { ...state, sortLessonsBy: action.by };
     default:
       return state;
