@@ -1,7 +1,7 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
-import CourseList from "./CourseList";
-import { connect } from "react-redux";
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import CourseList from './CourseList';
+import { connect } from 'react-redux';
 
 const CoursesListPage = props => {
   const coursesList = props.coursesList;
@@ -15,10 +15,8 @@ const CoursesListPage = props => {
       courseIsInList = true;
       const number_course_in_list = index;
       const name_of_the_course = coursesList[number_course_in_list][1];
-      url_name = name_of_the_course.toLowerCase().replace(/\s+/g, "_");
-      names_are_not_matching =
-        !props.match.params.name_of_the_course ||
-        url_name != props.match.params.name_of_the_course;
+      url_name = name_of_the_course.toLowerCase().replace(/\s+/g, '_');
+      names_are_not_matching = !props.match.params.name_of_the_course || url_name != props.match.params.name_of_the_course;
     }
   });
 
@@ -29,8 +27,7 @@ const CoursesListPage = props => {
   if (names_are_not_matching) {
     return <Redirect to={`/courses/${props.match.params.id}/${url_name}`} />;
   }
-  const focusId =
-    !!props.match.params.name_of_the_course && props.match.params.id;
+  const focusId = !!props.match.params.name_of_the_course && props.match.params.id;
   return (
     <div>
       <CourseList focusId={focusId} />

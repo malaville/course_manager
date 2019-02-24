@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { removeLesson, editLesson } from "../actions/courses";
+import React from 'react';
+import { connect } from 'react-redux';
+import { removeLesson, editLesson } from '../actions/courses';
 
-export class Lesson extends React.Component {
+class Lesson extends React.Component {
   constructor(props) {
     super(props);
     this.state = { ...props, editMode: false };
@@ -49,33 +49,19 @@ export class Lesson extends React.Component {
       <li key={this.props.course_id}>
         <div className="row">
           <h4 className="lesson__title col col-sm-9 col-12">
-            {this.props.course_short_name +
-              " - Séance°" +
-              this.props.lesson_number +
-              " - " +
-              this.props.date +
-              " " +
-              this.props.hour}
+            {this.props.course_short_name + ' - Séance°' + this.props.lesson_number + ' - ' + this.props.date + ' ' + this.props.hour}
           </h4>
           <div className="col col-sm-3 col-12">
             <button
               className="btn btn-primary"
-              {...(this.props.editable
-                ? { disabled: false }
-                : { disabled: true })}
+              {...(this.props.editable ? { disabled: false } : { disabled: true })}
               onClick={() => {
                 this.toggleEditMode();
               }}
             >
               Éditer
             </button>
-            <button
-              className="btn btn-danger"
-              onClick={() => (
-                this.props.course_id,
-                this.props.dispatch(removeLesson({ ...this.props }))
-              )}
-            >
+            <button className="btn btn-danger" onClick={() => (this.props.course_id, this.props.dispatch(removeLesson({ ...this.props })))}>
               Supprimer
             </button>
           </div>
@@ -91,39 +77,14 @@ export class Lesson extends React.Component {
               this.onSubmit(e);
             }}
           >
-            <input
-              type="text"
-              placeholder="Année-Mois-Jour"
-              name="date"
-              value={this.state.date}
-              onChange={e => this.onInputChange(e)}
-            />
-            <input
-              type="text"
-              placeholder="HH:MM"
-              name="hour"
-              value={this.state.hour}
-              onChange={e => this.onInputChange(e)}
-            />
+            <input type="text" placeholder="Année-Mois-Jour" name="date" value={this.state.date} onChange={e => this.onInputChange(e)} />
+            <input type="text" placeholder="HH:MM" name="hour" value={this.state.hour} onChange={e => this.onInputChange(e)} />
             <br />
             Lieu :<br />
-            <input
-              type="text"
-              placeholder="Lieu"
-              name="location"
-              value={this.state.location}
-              onChange={e => this.onInputChange(e)}
-            />
+            <input type="text" placeholder="Lieu" name="location" value={this.state.location} onChange={e => this.onInputChange(e)} />
             <br />
             Description : <br />
-            <textarea
-              type="text"
-              rows="5"
-              placeholder="Description"
-              name="description"
-              value={this.state.description}
-              onChange={e => this.onInputChange(e)}
-            />
+            <textarea type="text" rows="5" placeholder="Description" name="description" value={this.state.description} onChange={e => this.onInputChange(e)} />
             <br />
             <button type="submit">Enregistrer</button>
           </form>

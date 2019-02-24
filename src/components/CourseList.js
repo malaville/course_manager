@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import Course from "./Course";
+import React from 'react';
+import { connect } from 'react-redux';
+import Course from './Course';
 
-const CourseList = props => {
+export const CourseList = props => {
   return (
     <ul>
       {props.focusId ? (
@@ -13,14 +13,7 @@ const CourseList = props => {
           })[0]}
         />
       ) : (
-        props.courses.map(course => (
-          <Course
-            key={course.id}
-            showLessons={false}
-            {...course}
-            showLessons={course.id == props.focusId}
-          />
-        ))
+        props.courses.map(course => <Course key={course.id} {...course} showLessons={false} />)
       )}
     </ul>
   );
