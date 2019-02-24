@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addLesson } from '../actions/courses';
 
-const Course = ({ short_name, title, id, main_teacher, description, lessons, showLessons, dispatch }) => {
+export const Course = ({ short_name, title, id, main_teacher, description, lessons, showLessons, dispatch }) => {
   return (
     <li key={short_name}>
       <h3>

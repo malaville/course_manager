@@ -1,12 +1,6 @@
 //ADD_COURSE
-export const addCourse = ({
-  id = undefined,
-  title = "",
-  short_name = "",
-  main_teacher = "",
-  description = ""
-}) => ({
-  type: "ADD_COURSE",
+export const addCourse = ({ id = undefined, title = '', short_name = '', main_teacher = '', description = '' }) => ({
+  type: 'ADD_COURSE',
   course: {
     id,
     title,
@@ -19,18 +13,9 @@ export const addCourse = ({
 
 //ADD_LESSON
 
-export const addLesson = (
-  id,
-  {
-    location = "",
-    hour = "",
-    date = "",
-    lesson_number = -1,
-    description = ""
-  } = {}
-) => {
+export const addLesson = (id, { location = '', hour = '', date = '', lesson_number = -1, description = '' } = {}) => {
   return {
-    type: "ADD_LESSON",
+    type: 'ADD_LESSON',
     lesson: {
       location,
       hour,
@@ -44,13 +29,13 @@ export const addLesson = (
 
 //REMOVE_COURSE
 
-export const removeCourse = ({ id }) => ({ type: "REMOVE_COURSE", id });
+export const removeCourse = ({ id }) => ({ type: 'REMOVE_COURSE', id });
 
 //REMOVE_LESSON
 
 export const removeLesson = ({ course_id, lesson_number }) => {
   return {
-    type: "REMOVE_LESSON",
+    type: 'REMOVE_LESSON',
     course_id,
     lesson_number
   };
@@ -58,14 +43,14 @@ export const removeLesson = ({ course_id, lesson_number }) => {
 //EDIT COURSE
 
 export const editCourse = ({ course_id, modifications }) => ({
-  type: "EDIT_COURSE",
+  type: 'EDIT_COURSE',
   course_id,
   modifications
 });
 //EDIT LESSON
 
 export const editLesson = ({ course_id, lesson_number, modifications }) => ({
-  type: "EDIT_LESSON",
+  type: 'EDIT_LESSON',
   course_id,
   lesson_number,
   modifications
