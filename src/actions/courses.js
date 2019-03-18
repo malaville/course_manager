@@ -1,3 +1,5 @@
+import { db } from '../firebase/firebase';
+
 //ADD_COURSE
 export const addCourse = ({ id = undefined, title = '', short_name = '', main_teacher = '', description = '' }) => ({
   type: 'ADD_COURSE',
@@ -10,6 +12,18 @@ export const addCourse = ({ id = undefined, title = '', short_name = '', main_te
     last_modified: new Date().getTime()
   }
 });
+
+export const startAddCourse = (courseData = {}) => dispatch => {
+  const { id, title, short_name, main_teacher, description } = courseData;
+  const course = { description, title, short_name, main_teacher };
+  return db
+    .ref('courses')
+    .push(course)
+    .then(ref => {
+      dispatch(addCourse({ id: ref.key, ...course }));
+      return ref.key;
+    });
+};
 
 //ADD_LESSON
 

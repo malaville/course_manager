@@ -1,13 +1,13 @@
-import React from "react";
-import { connect } from "react-redux";
-import { addCourse } from "../actions/courses";
+import React from 'react';
+import { connect } from 'react-redux';
+import { addCourse, startAddCourse } from '../actions/courses';
 
 class AddCoursePage extends React.Component {
   state = {
-    title: "",
-    short_name: "",
-    main_teacher: "",
-    description: ""
+    title: '',
+    short_name: '',
+    main_teacher: '',
+    description: ''
   };
 
   onInputChange = e => {
@@ -21,14 +21,10 @@ class AddCoursePage extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     console.log(this.state);
-    const allFieldsAreFilled =
-      this.state.title &&
-      this.state.short_name &&
-      this.state.main_teacher &&
-      this.state.description;
+    const allFieldsAreFilled = this.state.title && this.state.short_name && this.state.main_teacher && this.state.description;
     if (allFieldsAreFilled) {
-      this.props.dispatch(addCourse({ ...this.state }));
-      this.props.history.push("/courses/" + (this.props.coursesNumber + 1));
+      startAddCourse({ ...this.state })(this.props.dispatch);
+      this.props.history.push('/courses/' + (this.props.coursesNumber + 1));
     }
   };
 
@@ -37,40 +33,15 @@ class AddCoursePage extends React.Component {
       <div>
         <form onSubmit={e => this.onSubmit(e)}>
           Titre et Acronyme: <br />
-          <input
-            type="text"
-            placeholder="Titre du cours"
-            name="title"
-            value={this.state.title}
-            onChange={e => this.onInputChange(e)}
-          />
-          <input
-            type="text"
-            placeholder="Acronyme (i.e. CR3)"
-            name="short_name"
-            value={this.state.short_name}
-            onChange={e => this.onInputChange(e)}
-          />
+          <input type="text" placeholder="Titre du cours" name="title" value={this.state.title} onChange={e => this.onInputChange(e)} />
+          <input type="text" placeholder="Acronyme (i.e. CR3)" name="short_name" value={this.state.short_name} onChange={e => this.onInputChange(e)} />
           <br />
           professeur en charge :
           <br />
-          <input
-            type="text"
-            placeholder="Professeur en charge"
-            name="main_teacher"
-            value={this.state.main_teacher}
-            onChange={e => this.onInputChange(e)}
-          />
+          <input type="text" placeholder="Professeur en charge" name="main_teacher" value={this.state.main_teacher} onChange={e => this.onInputChange(e)} />
           <br />
           Description : <br />
-          <textarea
-            type="text"
-            rows="10"
-            placeholder="Description"
-            name="description"
-            value={this.state.description}
-            onChange={e => this.onInputChange(e)}
-          />
+          <textarea type="text" rows="10" placeholder="Description" name="description" value={this.state.description} onChange={e => this.onInputChange(e)} />
           <br />
           <button type="submit">Enregister</button>
         </form>

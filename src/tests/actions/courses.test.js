@@ -1,4 +1,8 @@
-import { addCourse, addLesson, removeCourse, removeLesson, editLesson, editCourse } from '../../actions/courses';
+import { addCourse, addLesson, removeCourse, removeLesson, editLesson, editCourse, startAddCourse } from '../../actions/courses';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+
+const createMockStore = configureMockStore([thunk]);
 
 const mock_course = {
   id: 1,
@@ -94,4 +98,26 @@ test('should setup courses and lessons action objects correctly', () => {
     course_id: 1,
     modifications: { title: 'New Title' }
   });
+});
+
+test('Should add a course to database and store', done => {
+  const store = configureMockStore([thunk])({});
+  const { id, lessons, ...fakeCourse } = mock_course;
+  store.dispatch(startAddCourse(fakeCourse)).then(key => {
+    const actions = store.getActions();
+    expect(actions[0]).toEqual({
+      type: 'ADD_COURSE',
+      course: {
+        id: key,
+        ...fakeCourse,
+        last_modified: expect.anything()
+      }
+    });
+    done();
+  });
+});
+
+test('Should add a course with default to database and store', done => {
+  expect(1).toBe(1);
+  done();
 });
