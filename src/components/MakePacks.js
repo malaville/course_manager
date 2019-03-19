@@ -64,6 +64,10 @@ class Calculator extends React.Component {
         <input type="text" name="size" value={this.state.size} onChange={e => this.onSizeChange(e)} />
         <button onClick={e => this.onCalculate()}>Calculate</button>
         <p>Le résultat est : {this.state.result}</p>
+
+        <p>
+          Available code <a href="https://github.com/malaville/course_manager/blob/master/src/components/MakePacks.js">HERE</a>
+        </p>
       </div>
     );
   }
