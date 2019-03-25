@@ -1,6 +1,7 @@
 import { addCourse, addLesson, removeCourse, removeLesson, editLesson, editCourse, startAddCourse } from '../../actions/courses';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { db } from '../../firebase/firebase';
 
 const createMockStore = configureMockStore([thunk]);
 
@@ -44,8 +45,7 @@ test('should setup courses and lessons action objects correctly', () => {
     type: 'ADD_COURSE',
     course: {
       ...mock_course,
-      lessons: undefined,
-      last_modified: expect.any(Number)
+      lessons: undefined
     }
   });
 
@@ -55,8 +55,7 @@ test('should setup courses and lessons action objects correctly', () => {
     course: {
       ...mock_course,
       lessons: undefined,
-      id: undefined,
-      last_modified: expect.any(Number)
+      id: undefined
     }
   });
 
@@ -103,21 +102,52 @@ test('should setup courses and lessons action objects correctly', () => {
 test('Should add a course to database and store', done => {
   const store = configureMockStore([thunk])({});
   const { id, lessons, ...fakeCourse } = mock_course;
-  store.dispatch(startAddCourse(fakeCourse)).then(key => {
-    const actions = store.getActions();
-    expect(actions[0]).toEqual({
-      type: 'ADD_COURSE',
-      course: {
-        id: key,
-        ...fakeCourse,
-        last_modified: expect.anything()
-      }
-    });
-    done();
-  });
+  store
+    .dispatch(startAddCourse(fakeCourse))
+    .then(key => {
+      const actions = store.getActions();
+      expect(actions[0]).toEqual({
+        type: 'ADD_COURSE',
+        course: {
+          id: key,
+          ...fakeCourse
+        }
+      });
+      return db.ref(`courses/${key}`).once('value');
+    })
+    .then(snapshot => {
+      expect(snapshot.val()).toEqual({ ...fakeCourse });
+      done();
+    })
+    .catch(error => console.log(error));
 });
 
 test('Should add a course with default to database and store', done => {
-  expect(1).toBe(1);
-  done();
+  const store = configureMockStore([thunk])({});
+  store
+    .dispatch(startAddCourse({}))
+    .then(key => {
+      const actions = store.getActions();
+      expect(actions[0]).toEqual({
+        type: 'ADD_COURSE',
+        course: {
+          id: key,
+          title: '',
+          short_name: '',
+          main_teacher: '',
+          description: ''
+        }
+      });
+      return db.ref(`courses/${key}`).once('value');
+    })
+    .then(snapshot => {
+      expect(snapshot.val()).toEqual({
+        title: '',
+        short_name: '',
+        main_teacher: '',
+        description: ''
+      });
+      done();
+    })
+    .catch(error => console.log(error));
 });

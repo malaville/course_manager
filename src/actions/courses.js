@@ -8,13 +8,12 @@ export const addCourse = ({ id = undefined, title = '', short_name = '', main_te
     title,
     short_name,
     main_teacher,
-    description,
-    last_modified: new Date().getTime()
+    description
   }
 });
 
 export const startAddCourse = (courseData = {}) => dispatch => {
-  const { id, title, short_name, main_teacher, description } = courseData;
+  const { id, title = '', short_name = '', main_teacher = '', description = '' } = courseData;
   const course = { description, title, short_name, main_teacher };
   return db
     .ref('courses')
